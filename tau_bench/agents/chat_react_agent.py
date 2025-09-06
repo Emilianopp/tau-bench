@@ -83,6 +83,8 @@ class ChatReActAgent(Agent):
                     {"role": "user", "content": obs},
                 ]
             )
+            if cost==None:
+                cost=0.0
             total_cost += cost
             if response.done:
                 break

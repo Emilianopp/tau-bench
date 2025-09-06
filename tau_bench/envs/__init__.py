@@ -3,7 +3,11 @@
 from typing import Optional, Union
 from tau_bench.envs.base import Env
 from tau_bench.envs.user import UserStrategy
+from typing import Any, Callable, Dict, List
+from tau_bench.types import (
+    Task,
 
+)
 
 def get_env(
     env_name: str,
@@ -12,6 +16,7 @@ def get_env(
     task_split: str,
     user_provider: Optional[str] = None,
     task_index: Optional[int] = None,
+    tasks: List[Task] = None
 ) -> Env:
     if env_name == "retail":
         from tau_bench.envs.retail import MockRetailDomainEnv
@@ -22,6 +27,7 @@ def get_env(
             task_split=task_split,
             user_provider=user_provider,
             task_index=task_index,
+            tasks=tasks
         )
     elif env_name == "airline":
         from tau_bench.envs.airline import MockAirlineDomainEnv

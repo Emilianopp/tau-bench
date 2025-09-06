@@ -7,6 +7,11 @@ from tau_bench.envs.retail.tools import ALL_TOOLS
 from tau_bench.envs.retail.wiki import WIKI
 from typing import Optional, Union
 from tau_bench.envs.user import UserStrategy
+from typing import Any, Callable, Dict, List, Type, Optional, Set, Union, Tuple
+from tau_bench.types import (
+    Task,
+
+)
 
 
 class MockRetailDomainEnv(Env):
@@ -17,16 +22,18 @@ class MockRetailDomainEnv(Env):
         user_provider: Optional[str] = None,
         task_split: str = "test",
         task_index: Optional[int] = None,
+        tasks: List[Task] = None
     ):
-        match task_split:
-            case "test":
-                from tau_bench.envs.retail.tasks_test import TASKS_TEST as tasks
-            case "train":
-                from tau_bench.envs.retail.tasks_train import TASKS_TRAIN as tasks
-            case "dev":
-                from tau_bench.envs.retail.tasks_dev import TASKS_DEV as tasks
-            case _:
-                raise ValueError(f"Unknown task split: {task_split}")
+        if tasks == None:
+            match task_split:
+                case "test":
+                    from tau_bench.envs.retail.tasks_test import TASKS_TEST as tasks
+                case "train":
+                    from tau_bench.envs.retail.tasks_train import TASKS_TRAIN as tasks
+                case "dev":
+                    from tau_bench.envs.retail.tasks_dev import TASKS_DEV as tasks
+                case _:
+                    raise ValueError(f"Unknown task split: {task_split}")
         super().__init__(
             data_load_func=load_data,
             tools=ALL_TOOLS,
